@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { LoggerModule } from 'nestjs-pino';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { LoggerModule } from 'nestjs-pino';
     }),
     ConfigModule.forRoot(),
     UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
