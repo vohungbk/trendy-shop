@@ -8,8 +8,6 @@ import createUser from './createUser'
 export default function SignUp() {
   const [state, formAction] = useFormState(createUser, { error: '' })
 
-  console.log(state.error)
-
   return (
     <form action={formAction} className='w-full max-w-xs'>
       <Stack spacing={2}>
