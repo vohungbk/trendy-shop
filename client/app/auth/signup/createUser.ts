@@ -1,7 +1,7 @@
 'use server'
 
-import { FormError } from '@/app/common/form-error.interface'
-import { post } from '@/app/utils/fetch'
+import { FormError } from '@/app/common/interface/form-error.interface'
+import { post } from '@/app/common/utils/fetch'
 import { redirect } from 'next/navigation'
 
 export default async function createUser(
