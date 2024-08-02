@@ -37,7 +37,7 @@ export class AuthService {
           ms(this.configService.getOrThrow<string>('JWT_EXPIRATION')),
       );
       const tokenPayload: TokenPayload = {
-        tokenId: user.id,
+        userId: user.id,
       };
       const token = this.jwtService.sign(tokenPayload);
 
