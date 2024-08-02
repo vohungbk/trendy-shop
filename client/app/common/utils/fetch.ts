@@ -25,20 +25,15 @@ export const post = async (pathName: string, formData: FormData) => {
   return { error: '' }
 }
 
-export const get = async (pathName: string) => {
-  console.log(getCookieHeader())
-
+export const get = async <T>(pathName: string, tags?: string[]) => {
   const res = await fetch(`${API_URL}/${pathName}`, {
     headers: {
       ...getCookieHeader(),
     },
+    next: { tags },
   })
 
   const parseRes = await res.json()
 
-  if (!res.ok) {
-    return { error: getErrorMessage(parseRes) }
-  }
-
-  return parseRes
+  return parseRes as T
 }
