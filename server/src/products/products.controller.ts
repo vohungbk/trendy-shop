@@ -4,6 +4,7 @@ import {
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
+  Param,
   ParseFilePipe,
   Post,
   UploadedFile,
@@ -18,6 +19,7 @@ import { TokenPayload } from '../auth/token-payload.interface';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { PRODUCT_IMAGES } from './product-image';
 
 @Controller('products')
 export class ProductsController {
@@ -36,7 +38,7 @@ export class ProductsController {
   @UseInterceptors(
     FileInterceptor('image', {
       storage: diskStorage({
-        destination: 'public/products',
+        destination: PRODUCT_IMAGES,
         filename: (req, file, callback) =>
           callback(
             null,
@@ -63,5 +65,11 @@ export class ProductsController {
   @UseGuards(JwtAuthGuard)
   async getAllProduct() {
     return this.productsService.getAllProduct();
+  }
+
+  @Get(':productId')
+  @UseGuards(JwtAuthGuard)
+  async getProductDetail(@Param('productId') productId: string) {
+    return await this.productsService.getProductDetail(+productId);
   }
 }
