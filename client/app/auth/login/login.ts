@@ -6,6 +6,7 @@ import { getErrorMessage } from '@/app/common/utils/errors'
 import { jwtDecode } from 'jwt-decode'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { AUTHENTICATION_COOKIE } from '../auth.cookie'
 
 export const login = async (_preState: FormResponse, formData: FormData) => {
   const res = await fetch(`${API_URL}/auth/login`, {
@@ -32,7 +33,7 @@ const setAuthCookie = (response: Response) => {
     const token = setCookieHeader.split(';')[0].split('=')[1]
 
     cookies().set({
-      name: 'Authentication',
+      name: AUTHENTICATION_COOKIE,
       value: token,
       httpOnly: true,
       secure: true,

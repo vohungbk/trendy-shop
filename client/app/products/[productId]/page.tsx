@@ -3,15 +3,14 @@ import getProduct from '../actions/getProductDetail'
 import { Grid, Stack, Typography } from '@mui/material'
 import Image from 'next/image'
 import { getProductImage } from '../product-image'
+import Checkout from '@/app/checkout/checkout'
 
 interface ProductDetailProps {
   params: { productId: string }
 }
 
 const ProductDetail: FC<ProductDetailProps> = async ({ params }) => {
-  console.log(params)
   const product = await getProduct(params.productId)
-  console.log(product)
 
   return (
     <Grid container marginBottom={'2rem'} rowGap={3}>
@@ -33,6 +32,7 @@ const ProductDetail: FC<ProductDetailProps> = async ({ params }) => {
           <Typography variant='h2'>{product.name}</Typography>
           <Typography>{product.description}</Typography>
           <Typography variant='h4'>${product.price}</Typography>
+          <Checkout productId={+params.productId} />
         </Stack>
       </Grid>
     </Grid>

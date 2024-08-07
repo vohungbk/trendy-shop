@@ -52,4 +52,8 @@ export class AuthService {
       console.log(error);
     }
   }
+
+  verifyToken(jwt: string) {
+    this.jwtService.verify(jwt);
+  }
 }

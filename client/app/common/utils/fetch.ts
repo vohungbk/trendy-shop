@@ -6,14 +6,16 @@ export const getCookieHeader = () => ({
   Cookie: cookies().toString(),
 })
 
-export const post = async (pathName: string, formData: FormData) => {
+export const post = async (pathName: string, data: FormData | object) => {
+  const body = data instanceof FormData ? Object.fromEntries(data) : data
+
   const res = await fetch(`${API_URL}/${pathName}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       ...getCookieHeader(),
     },
-    body: JSON.stringify(Object.fromEntries(formData)),
+    body: JSON.stringify(body),
   })
 
   const parseRes = await res.json()
@@ -25,8 +27,18 @@ export const post = async (pathName: string, formData: FormData) => {
   return { error: '', data: parseRes }
 }
 
-export const get = async <T>(pathName: string, tags?: string[]) => {
-  const res = await fetch(`${API_URL}/${pathName}`, {
+export const get = async <T>(
+  pathName: string,
+  tags?: string[],
+  params?: URLSearchParams,
+) => {
+  const url = params
+    ? `${API_URL}/${pathName}?` + params
+    : `${API_URL}/${pathName}`
+
+  console.log(url)
+
+  const res = await fetch(url, {
     headers: {
       ...getCookieHeader(),
     },

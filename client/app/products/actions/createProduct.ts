@@ -1,8 +1,8 @@
 'use server'
 
-import { revalidateTag } from 'next/cache'
-import { getCookieHeader, post } from '../../common/utils/fetch'
 import { API_URL } from '@/app/common/constants/api'
+import { getCookieHeader, post } from '../../common/utils/fetch'
+import revalidateProduct from './revalidate-product'
 
 export default async function createProduct(formData: FormData) {
   const response = await post('products', formData)
@@ -10,7 +10,7 @@ export default async function createProduct(formData: FormData) {
   if (productImage instanceof File && !response.error) {
     await uploadProductImage(response.data.id, productImage)
   }
-  revalidateTag('products')
+  revalidateProduct()
   return response
 }
 
